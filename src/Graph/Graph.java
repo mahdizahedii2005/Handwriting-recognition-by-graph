@@ -6,63 +6,104 @@ import Graph.Detail.Vertex;
 import Tool.CustomHashSet;
 import Tool.Helper;
 
+import java.awt.*;
+import java.awt.geom.Point2D;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.*;
+import java.util.List;
 
-public class Graph implements Cloneable {
+public class Graph implements Cloneable, Comparable<Graph> {
     public static HashMap<Integer, Graph> GRAPHS = new HashMap<>();
-    public int Id;
+    private static ArrayList<Integer> GRAPHS_ID = new ArrayList<>();
+    public final int id;
     public HashMap<Integer, Vertex> vertexes;
     public HashMap<Integer, Edge> edges;
     public boolean haveNegValue = false;
     private double priceFromOriginal = 0;
 
     public Graph(int id) {
-        Id = id;
+        this.id = id;
         vertexes = new HashMap<>();
         edges = new HashMap<>();
     }
 
-    public static Graph CreatGraph(int id) {
-        Graph graph = new Graph(id);
-        return GRAPHS.putIfAbsent(id, graph);
+    public boolean isEmpty() {
+        return vertexes.isEmpty() && edges.isEmpty();
     }
 
-    //        double[][] difPointVertex = new double[monomorphicGraph.graph1.vertexes.size()][monomorphicGraph.graph1.vertexes.size()];
-//        int i = 0;
-//        for (Vertex vertex1 : monomorphicGraph.graph1.vertexes.values()) {
-//            int j = 0;
-//            for (Vertex vertex2 : monomorphicGraph.graph2.vertexes.values()) {
-//                difPointVertex[i][j] = (Math.abs(vertex1.getWeight() - vertex2.getWeight()));
-//                j++;
-//
-//            }
-//            i++;
-//        }
-//        double[][] difPointEdge = new double[monomorphicGraph.graph1.edges.size()][monomorphicGraph.graph1.edges.size()];
-//        i = 0;
-//        for (Edge edge1 : monomorphicGraph.graph1.edges.values()) {
-//            int j = 0;
-//            for (Edge edge2 : monomorphicGraph.graph2.edges.values()) {
-//                difPointVertex[i][j] = (Math.abs(edge2.getWeight() - edge1.getWeight()));
-//                j++;
-//            }
-//            i++;
-//        }
-//
-//
-//        \
+    public static Graph getLastGraph() {
+        return GRAPHS.get(GRAPHS_ID.get(GRAPHS_ID.size() - 1));
+    }
+
+    public char getLetter() {
+        return (char) id;
+    }
+
+    public static Graph CreatGraph(int id) {
+        Graph graph = new Graph(id);
+        if (GRAPHS.putIfAbsent(id, graph) == null) {
+            GRAPHS_ID.add(id);
+        }
+        return graph;
+    }
+
+    public static Graph CreatGraph(char letter) {
+        Graph graph = new Graph(letter);
+        if (GRAPHS.putIfAbsent((int) letter, graph) == null) {
+            GRAPHS_ID.add((int) letter);
+        }
+        return graph;
+    }
+
+    public static void removeLastGraph() {
+        int key = GRAPHS_ID.get(GRAPHS_ID.size() - 1);
+        GRAPHS.remove(key);
+        GRAPHS_ID.remove((Object) key);
+    }
+
+    public ArrayList<Integer> getVertexId() {
+        return new ArrayList<>(vertexes.keySet());
+    }
+
+    public Graph[] getBindingComponents() {
+        ArrayList<Graph> bindingComponents = new ArrayList<>();
+        Graph clone = clone();
+        while (!clone.vertexes.isEmpty()) {
+            Graph graph = new Graph(Helper.HashMapToList(clone.vertexes).get(0).id);
+            HashSet<Integer> current = new HashSet<>();
+            Vertex vertex = Helper.HashMapToList(clone.vertexes).get(0);
+            current.add(vertex.id);
+            graph.addVertex(vertex.id, vertex.position, vertex.getWeight());
+            while (!current.isEmpty()) {
+                vertex = clone.vertexes.get(current.toArray()[0]);
+                current.remove(vertex.id);
+                for (Vertex vertex1 : vertex.getNeighbor()) {
+                    if (current.add(vertex1.id)) graph.addVertex(vertex1.id, vertex1.position, vertex1.getWeight());
+                }
+                for (Edge edge : vertex.getAllEdges()) {
+                    graph.addEdge(edge.source.id, edge.destination.id, edge.getWeight());
+                }
+                clone.deleteVertex(vertex.id);
+            }
+            bindingComponents.add(graph);
+        }
+        return Helper.toArray(bindingComponents);
+    }
+
+    public List<List<Integer>> getEdges() {
+        List<List<Integer>> result = new ArrayList<>();
+        for (Edge edge : edges.values()) {
+            List<Integer> arrayList = new ArrayList<>();
+            arrayList.add(edge.source.id);
+            arrayList.add(edge.destination.id);
+            result.add(arrayList);
+        }
+        return result;
+    }
+
     private static CustomHashSet getAllUnimorphs(Graph graph1, Graph graph2) {
         CustomHashSet arrayList = new CustomHashSet();
-//        if (areThisTwoTheSame(graph1, graph2)) {
-//            arrayList.add(new TwoMonomorphicGraph(graph1, graph2));
-//            if (!graph1.haveNegValue && !graph2.haveNegValue) {
-//                return arrayList;
-//            } else {
-//                if (graph1.edges.isEmpty() && graph2.edges.isEmpty()) return arrayList;
-//            }
-//        }
         Graph first;
         Graph second;
         if (graph1.getKeyNumber() >= graph2.getKeyNumber()) {
@@ -137,7 +178,7 @@ public class Graph implements Cloneable {
             if (graph2.edges.isEmpty()) return new CustomHashSet();
         }
         boolean ab = !cash.add(graph1.toSerialNumber() + graph2.toSerialNumber() + 'e');
-        boolean ba = !graph2.toSerialNumber().equals(graph1.toSerialNumber()) && !cash.add(graph2.toSerialNumber() + graph1.toSerialNumber() + 'e');
+        boolean ba = graph2.toSerialNumber().equals(graph1.toSerialNumber()) ? false : !cash.add(graph2.toSerialNumber() + graph1.toSerialNumber() + 'e');
         if (ab || ba) return new CustomHashSet();
         CustomHashSet result = new CustomHashSet();
         if (areThisTwoTheSame(graph1, graph2)) {
@@ -212,36 +253,26 @@ public class Graph implements Cloneable {
         return false;
     }
 
-    public ArrayList<Integer> getVertexId() {
-        return new ArrayList<>(vertexes.keySet());
-    }
-
-    public List<List<Integer>> getEdges() {
-        List<List<Integer>> result = new ArrayList<>();
-        for (Edge edge : edges.values()) {
-            List<Integer> arrayList = new ArrayList<>();
-            arrayList.add(edge.source.id);
-            arrayList.add(edge.destination.id);
-            result.add(arrayList);
-        }
-        return result;
-    }
-
     public double getPriceFromOriginal() {
         return priceFromOriginal;
     }
 
-    public boolean addVertex(int vertexId, double weight) {
+    public boolean addVertex(int vertexId, Point2D point2D, double weight) {
         if (weight < 0) haveNegValue = true;
-        return vertexes.putIfAbsent(vertexId, new Vertex(vertexId, weight)) == null;
+        return vertexes.putIfAbsent(vertexId, new Vertex(vertexId, point2D, weight)) == null;
     }
 
     public boolean addEdge(int sourceId, int destinationId, double weight) {
         try {
+            Vertex sourceVertex = vertexes.get(sourceId);
+            Vertex destinationVertex = vertexes.get(destinationId);
+            if (weight == 0) {
+                weight = sourceVertex.position.distance(destinationVertex.position);
+            }
             if (weight < 0) haveNegValue = true;
             Edge edge = new Edge(vertexes.get(sourceId), vertexes.get(destinationId), weight);
-            boolean a = vertexes.get(sourceId).addEdge(edge, true);
-            boolean b = vertexes.get(destinationId).addEdge(edge, false);
+            boolean a = sourceVertex.addEdge(edge, true);
+            boolean b = destinationVertex.addEdge(edge, false);
             return edges.putIfAbsent(Helper.PAIR_CODE(sourceId, destinationId), edge) == null && a && b;
         } catch (NullPointerException e) {
             return false;
@@ -298,16 +329,16 @@ public class Graph implements Cloneable {
     public String toString() {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
         DecimalFormat df = new DecimalFormat("0.000000", symbols);
-        StringBuilder result = new StringBuilder(Id + " " + vertexes.values().size() + " " + edges.values().size() + '\n');
+        StringBuilder result = new StringBuilder(getLetter() + " " + vertexes.values().size() + " " + edges.values().size() + '\n');
         ArrayList<Edge> e = new ArrayList<>(edges.values());
         Collections.sort(e);
         ArrayList<Vertex> v = new ArrayList<>(vertexes.values());
         Collections.sort(v);
         for (Vertex vertex : v) {
-            result.append(Id).append(" ").append(vertex.id).append(" ").append(df.format(vertex.getWeight())).append('\n');
+            result.append(id).append(" ").append(vertex.id).append(" ").append(df.format(vertex.getWeight())).append('\n');
         }
         for (Edge edge : e) {
-            result.append(Id).append(" ").append(edge.source.id).append(" ").append(edge.destination.id).append(" ").append(df.format(edge.getWeight())).append('\n');
+            result.append(id).append(" ").append(edge.source.id).append(" ").append(edge.destination.id).append(" ").append(df.format(edge.getWeight())).append('\n');
         }
         return result.toString();
 
@@ -344,7 +375,7 @@ public class Graph implements Cloneable {
         if (vertex1 == null || vertex2 == null) return 0;
         HashSet<Integer> vertex2Collection = new HashSet<>(vertex2.edgesFromSource.keySet());
         vertex2Collection.addAll(vertex2.edgesFromDestination.keySet());
-        //add intersect object
+
         HashSet<Integer> intersectDes = Helper.Intersect(vertex2Collection, new HashSet<>(vertex1.edgesFromDestination.keySet()));
         for (int edge : intersectDes) {
             Edge edge1 = vertex2.edgesFromSource.get(edge);
@@ -368,7 +399,7 @@ public class Graph implements Cloneable {
             targetedEdge.setWeight(edge1.getWeight() + targetedEdge.getWeight());
             this.deleteEdge(edge1);
         }
-        //add not intersect object
+
         HashSet<Integer> vertex1Collection = new HashSet<>(vertex1.edgesFromSource.keySet());
         vertex1Collection.addAll(vertex1.edgesFromDestination.keySet());
         HashSet<Integer> notIntersect = Helper.Minus(vertex2Collection, vertex1Collection);
@@ -417,9 +448,9 @@ public class Graph implements Cloneable {
 
     @Override
     public Graph clone() {
-        Graph clone = new Graph(Id);
+        Graph clone = new Graph(id);
         for (int id : vertexes.keySet()) {
-            clone.addVertex(id, vertexes.get(id).getWeight());
+            clone.addVertex(id, vertexes.get(id).position, vertexes.get(id).getWeight());
         }
         for (int id : edges.keySet()) {
             Edge edge = edges.get(id);
@@ -449,5 +480,52 @@ public class Graph implements Cloneable {
         }
         result.append((int) (priceFromOriginal * 1000000));
         return result.toString();
+    }
+
+    private Point2D findLeftest() {
+        Point2D point2D = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        for (Vertex vertex : vertexes.values()) {
+            if (point2D.getX() > vertex.position.getX()) {
+                point2D = vertex.position;
+            }
+        }
+        return point2D;
+    }
+
+    public int lowestY() {
+        int result = Integer.MAX_VALUE;
+        for (Vertex vertex : vertexes.values()) {
+            if (vertex.position.getY() < result) {
+                result = (int) vertex.position.getY();
+            }
+        }
+        return result;
+    }
+
+    public String whatIsThisChar() {
+        Graph closetGraph = GRAPHS.get(GRAPHS_ID.get(0));
+        double price = Double.POSITIVE_INFINITY;
+        for (int i = 0; i < Graph.GRAPHS_ID.size() - 1; i++) {
+            Graph kandid = GRAPHS.get(GRAPHS_ID.get(i));
+            String priceValue = this.Distanced(kandid);
+            priceValue = priceValue.substring(0, priceValue.length() - 1);
+            double difference = ("inf").equals(priceValue) ? Double.POSITIVE_INFINITY : Double.parseDouble(priceValue);
+            if (difference < price) {
+                price = difference;
+                closetGraph = kandid;
+            } else if (difference == price) {
+                if (closetGraph.getLetter() > kandid.getLetter()) {
+                    closetGraph = kandid;
+                }
+            }
+        }
+        return closetGraph == null ? "" : closetGraph.getLetter() + "";
+    }
+
+    @Override
+    public int compareTo(Graph o) {
+        Point2D p1 = findLeftest();
+        Point2D p2 = o.findLeftest();
+        return Integer.compare((int) p1.getX(), (int) p2.getX());
     }
 }

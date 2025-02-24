@@ -13,4 +13,9 @@ public class CmdListener implements Listenable {
     public String listen() {
         return sc.nextLine();
     }
+
+    @Override
+    public boolean hasAnyCommand() {
+        return sc.hasNextLine();
+    }
 }

@@ -1,22 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="35a9aed4-79a7-4403-a415-6aaf6b9c8da6" name="Changes" comment="" />
+    <list default="true" id="35a9aed4-79a7-4403-a415-6aaf6b9c8da6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Graph/Detail/Edge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graph/Detail/Edge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Graph/Detail/TwoMonomorphicGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graph/Detail/TwoMonomorphicGraph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Graph/Detail/Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graph/Detail/Vertex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Graph/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graph/Graph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Graph/GraphVisualizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graph/GraphVisualizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Listener/CmdListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Listener/CmdListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Listener/Listenable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Listener/Listenable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OutPuter/CmdOutput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/OutPuter/CmdOutput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OutPuter/OutputAble.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/OutPuter/OutputAble.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Progressor/Formats.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Progressor/Formats.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Progressor/IProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Progressor/IProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Progressor/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Progressor/Processor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tool/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tool/Helper.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
-  <component name="ProjectId" id="2s5pbD7K5XZ7g5Bw9Rc7n32Hgph" />
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2s5qsvghfoCEC1yjABMencMnXWH" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -24,9 +49,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Desktop/programing/java/DS/graphProject/Handwriting recognition by graph_F3",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -43,15 +73,42 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="35a9aed4-79a7-4403-a415-6aaf6b9c8da6" name="Changes" comment="" />
-      <created>1737755358973</created>
+      <created>1737755994495</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1737755358973</updated>
-      <workItem from="1737755360051" duration="2000" />
+      <updated>1737755994495</updated>
+      <workItem from="1737755997128" duration="124000" />
+      <workItem from="1737883266770" duration="254000" />
+      <workItem from="1737977091029" duration="1123000" />
+      <workItem from="1738047148071" duration="1799000" />
+      <workItem from="1738094188559" duration="594000" />
+      <workItem from="1738157816161" duration="72000" />
+      <workItem from="1740390841728" duration="716000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../../Graph/src/progressor/Progressor.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../../Graph/src/Application.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../../Graph/src/Graph/information/Graph.java</url>
+          <line>77</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

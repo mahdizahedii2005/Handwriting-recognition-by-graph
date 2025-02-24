@@ -1,5 +1,5 @@
 package OutPuter;
 
 public interface OutputAble {
-    void show(String output, boolean check);
+    void show(String output);
 }

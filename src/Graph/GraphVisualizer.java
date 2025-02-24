@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 public class GraphVisualizer extends JPanel {
-    private final List<Integer> vertices;
-    private final List<List<Integer>> edges;
-    private final Map<Integer, Point> positions;
+    private List<Integer> vertices;
+    private List<List<Integer>> edges;
+    private Map<Integer, Point> positions;
 
     public GraphVisualizer(List<Integer> vertices, List<List<Integer>> edges) {
         this.vertices = vertices;
@@ -18,16 +18,8 @@ public class GraphVisualizer extends JPanel {
         calculatePositions();
     }
 
-    public static void showGraph(List<Integer> vertices, List<List<Integer>> edges) {
-        JFrame frame = new JFrame("Graph.Graph Visualizer");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 600);
-        frame.add(new GraphVisualizer(vertices, edges));
-        frame.setVisible(true);
-    }
-
     private void calculatePositions() {
-        int radius = 200; // شعاع دایره برای نمایش گره‌ها
+        int radius = 200;
         int centerX = 300;
         int centerY = 300;
         int n = vertices.size();
@@ -71,5 +63,13 @@ public class GraphVisualizer extends JPanel {
                 g2d.setColor(Color.BLUE);
             }
         }
+    }
+
+    public static void showGraph(List<Integer> vertices, List<List<Integer>> edges) {
+        JFrame frame = new JFrame("Graph Visualizer");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(600, 600);
+        frame.add(new GraphVisualizer(vertices, edges));
+        frame.setVisible(true);
     }
 }

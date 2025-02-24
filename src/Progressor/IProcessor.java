@@ -1,6 +1,7 @@
 package Progressor;
 
-public interface IProcessor {
-    String Progress(String query);
-}
+import Listener.Listenable;
 
+public interface IProcessor {
+    String Progress(String query, Listenable listenable);
+}

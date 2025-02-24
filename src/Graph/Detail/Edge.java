@@ -26,12 +26,12 @@ public class Edge implements Comparable<Edge> {
 
     @Override
     public boolean equals(Object obj) {
-        try {
-            Edge e = (Edge) obj;
-            if (source.equals(e.source) && destination.equals(e.destination) && getWeight() == e.getWeight())
-                return true;
-        } catch (Exception e) {
-        }
+        //try {
+        Edge e = (Edge) obj;
+        if (source.equals(e.source) && destination.equals(e.destination) && getWeight() == e.getWeight())
+            return true;
+//        } catch (Exception e) {
+//        }
         return false;
     }
 

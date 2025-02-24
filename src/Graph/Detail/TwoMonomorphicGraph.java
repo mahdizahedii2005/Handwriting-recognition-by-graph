@@ -1,11 +1,9 @@
 package Graph.Detail;
 
-import Graph.Graph;
-import Tool.Helper;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import Graph.Graph;
+import Tool.Helper;
 public class TwoMonomorphicGraph {
     public Graph graph1;
     public Graph graph2;
@@ -77,16 +75,16 @@ public class TwoMonomorphicGraph {
 
     @Override
     public boolean equals(Object obj) {
-        try {
-            TwoMonomorphicGraph twoMonomorphicGraph = (TwoMonomorphicGraph) obj;
-            boolean a = twoMonomorphicGraph.graph1.equals(graph1);
-            boolean b = twoMonomorphicGraph.graph2.equals(graph2);
+        //try {
+        TwoMonomorphicGraph twoMonomorphicGraph = (TwoMonomorphicGraph) obj;
+        boolean a = twoMonomorphicGraph.graph1.equals(graph1);
+        boolean b = twoMonomorphicGraph.graph2.equals(graph2);
 
-            boolean w = twoMonomorphicGraph.graph1.equals(graph2);
-            boolean e = twoMonomorphicGraph.graph2.equals(graph1);
-            if ((a && b) || (w && e)) return true;
-        } catch (Exception e) {
-        }
+        boolean w = twoMonomorphicGraph.graph1.equals(graph2);
+        boolean e = twoMonomorphicGraph.graph2.equals(graph1);
+        if ((a && b) || (w && e)) return true;
+//        } catch (Exception e) {
+//        }
         return false;
     }
 }

@@ -1,12 +1,15 @@
 package Graph.Detail;
 
+import Graph.Detail.Edge;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Vertex implements Comparable<Vertex> {
     public int id;
+    public Point2D position;
     public HashMap<Integer, Edge> edgesFromDestination;// source is this vertex
-    public HashMap<Integer, Edge> edgesFromSource;//destination is te vertex
+    public HashMap<Integer, Edge> edgesFromSource;//destination is this vertex
     private double weight;
 
     public Vertex(int id, double weight) {
@@ -16,9 +19,14 @@ public class Vertex implements Comparable<Vertex> {
         edgesFromSource = new HashMap<>();
     }
 
+    public Vertex(int id, Point2D point2D, double weight) {
+        this(id, weight);
+        this.position = point2D;
+    }
+
     @Override
     public String toString() {
-        return id + "";
+        return id + "( " + position.getX() + " , " + position.getY() + ")";
     }
 
     public boolean addEdge(Edge edge, boolean addFromDestination) {
@@ -26,6 +34,13 @@ public class Vertex implements Comparable<Vertex> {
         if (addFromDestination) result = edgesFromDestination.putIfAbsent(edge.destination.id, edge) == null;
         else result = edgesFromSource.putIfAbsent(edge.source.id, edge) == null;
         return result;
+    }
+
+    public ArrayList<Edge> getAllEdges() {
+        ArrayList<Edge> edges = new ArrayList<>();
+        edges.addAll(edgesFromSource.values());
+        edges.addAll(edgesFromDestination.values());
+        return edges;
     }
 
     public double getWeight() {

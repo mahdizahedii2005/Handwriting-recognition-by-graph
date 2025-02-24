@@ -6,11 +6,9 @@ public class Application implements Runnable {
     private final Listenable listenable;
     private final OutputAble outputAble;
     private final IProcessor Processor;
-    private final int numberOfQuery;
 
-    public Application(int numberOfQuery, Listenable listenable, OutputAble outputAble, IProcessor Processor) {
+    public Application(Listenable listenable, OutputAble outputAble, IProcessor Processor) {
         this.listenable = listenable;
-        this.numberOfQuery = numberOfQuery;
         this.outputAble = outputAble;
         this.Processor = Processor;
     }
@@ -18,10 +16,10 @@ public class Application implements Runnable {
     @Override
     public void run() {
         String query;
-        for (int i = 0; i < numberOfQuery; i++) {
+        while (listenable.hasAnyCommand()) {
             query = listenable.listen();
-            String answer = Processor.Progress(query);
-            outputAble.show(answer, i == numberOfQuery - 1);
+            String answer = Processor.Progress(query, listenable);
+            outputAble.show(answer);
         }
     }
 }
